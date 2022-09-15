@@ -1,2 +1,2 @@
 # React-Order-Pizza
-Pizza ordering App with react and django
+Pizza ordering App with react and django rest framework.
