@@ -53,7 +53,7 @@ For example: [nathan34.pythonanywhere.com/1/](http://nathan34.pythonanywhere.com
 }
 ```
 
-### Topping
+### Topping Options
 1. Pepperoni
 2. Mushroom
 3. Extra cheese
@@ -65,7 +65,7 @@ For example: [nathan34.pythonanywhere.com/1/](http://nathan34.pythonanywhere.com
 9. Tomato
 10. Fresh basil
 
-### Size
+### Size Options
 1. Small
 2. Medium
 3. Large
