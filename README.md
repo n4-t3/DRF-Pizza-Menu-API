@@ -7,7 +7,7 @@ Pizza Menu API with:
 
 Make a fetch request to [nathan34.pythonanywhere.com](http://nathan34.pythonanywhere.com/).
 
-> This returns the following json response.
+> This returns a json response that have the following structure.
 ```json wrap
 [
    {
@@ -31,14 +31,14 @@ Make a fetch request to [nathan34.pythonanywhere.com](http://nathan34.pythonanyw
       "size":2,
       "average_rating":0.0,
       "number_of_ratings":0
-   }...
+   }
 ]
 ```
 
 You can choose a response using the menu ID.
 For example: [nathan34.pythonanywhere.com/1/](http://nathan34.pythonanywhere.com/1/).
 
->This return the following json response
+> This returns a json response that have the following structure.
 ```json wrap
 {
    "id":1,
