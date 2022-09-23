@@ -31,7 +31,7 @@ Make a fetch request to [nathan34.pythonanywhere.com](http://nathan34.pythonanyw
       "size":2,
       "average_rating":0.0,
       "number_of_ratings":0
-   }
+   }...
 ]
 ```
 
@@ -54,19 +54,24 @@ For example: [nathan34.pythonanywhere.com/1/](http://nathan34.pythonanywhere.com
 ```
 
 ### Topping Options
-1. Pepperoni
-2. Mushroom
-3. Extra cheese
-4. Sausage
-5. Onion
-6. Black olives
-7. Green pepper
-8. Fresh garlic
-9. Tomato
-10. Fresh basil
+|Number| Topping Type | 
+| :--- |          ---:|
+| 1    | Pepperoni    |
+| 2    | Mushroom     |
+| 3    | Extra cheese |
+| 4    | Sausage      |
+| 5    | Onion        |
+| 6    | Black olives |
+| 7    | Green pepper |
+| 8    | Fresh garlic |
+| 9    | Tomato       |
+| 10   | Fresh basil  |
 
 ### Size Options
-1. Small
-2. Medium
-3. Large
+| Number  | Size Type | 
+| :---    |    ---:   |
+| 1       | Small     |
+| 2       | Medium    |
+| 3       | Large     |
+
 
