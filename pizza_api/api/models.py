@@ -4,7 +4,7 @@ from django.db import models
 
 
 class Menu(models.Model):
-    TOPPING_CHOICE = [(1,'Pepperoni'),(2,'Mushroom'),(3,'Extra cheese'),(3,'Sausage'),(4,'Onion'),(5,'Black olives'),(6,'Green pepper'),(7,'Fresh garlic'),(8,'Tomato'),(9,'Fresh basil')]
+    TOPPING_CHOICE = [(1,'Pepperoni'),(2,'Mushroom'),(3,'Extra cheese'),(4,'Sausage'),(5,'Onion'),(6,'Black olives'),(7,'Green pepper'),(8,'Fresh garlic'),(9,'Tomato'),(10,'Fresh basil')]
 
     SIZE_CHOICE = [(1,'Small'),(2,'Medium'),(3,'Large')]
 
