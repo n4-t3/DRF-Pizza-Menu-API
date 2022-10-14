@@ -6,8 +6,8 @@ from rest_framework import status
 from rest_framework.renderers import JSONRenderer
 # Create your views here.
 
+# @renderer_classes([JSONRenderer])
 @api_view(['GET','POST'])
-@renderer_classes([JSONRenderer])
 def menu_list(request):
     if request.method =='GET':
         menu = Menu.objects.all()
@@ -24,9 +24,8 @@ def menu_list(request):
         else:
             return Response({'Error': 'Authentication credentials were not provided.'}, status=status.HTTP_403_FORBIDDEN)
 
-
+# @renderer_classes([JSONRenderer])
 @api_view(['GET','PUT','DELETE'])
-@renderer_classes([JSONRenderer])
 def menu_chosen(request,id):
     if request.method == "GET":
         try:
