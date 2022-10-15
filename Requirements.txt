@@ -3,6 +3,7 @@ backports.zoneinfo==0.2.1
 Django==4.1.1
 django-cors-headers==3.13.0
 django-filter==22.1
+django-multiselectfield==0.1.12
 djangorestframework==3.14.0
 djangorestframework-simplejwt==5.2.1
 importlib-metadata==4.12.0
