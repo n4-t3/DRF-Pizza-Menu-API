@@ -14,7 +14,7 @@ class Menu(models.Model):
     topping_2 = models.IntegerField(choices=TOPPING_CHOICE,default=3)
     topping_3 = models.IntegerField(choices=TOPPING_CHOICE,default=6)
     size = models.IntegerField(choices=SIZE_CHOICE,default=2)
-    picture = models.ImageField(upload_to='pizza-images',blank=False,default='pizza-images/ivan-torres-MQUqbmszGGM-unsplash.jpg')
+    picture = models.ImageField(upload_to='pizza-images',blank=True,default='pizza-images/no_image.jpg')
     average_rating = models.FloatField(default=0)
     number_of_ratings = models.IntegerField(default=0)
     
