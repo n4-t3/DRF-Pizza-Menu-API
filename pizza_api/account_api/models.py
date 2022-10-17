@@ -66,6 +66,13 @@ DELIVERY_CHOICES = (
 )
 
 
+class Cart(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    item = models.ForeignKey(Menu, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.item.name
+
 class Order(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     item = models.ForeignKey(Menu, on_delete=models.CASCADE)
@@ -79,7 +86,7 @@ class Order(models.Model):
         max_length=10,
         max_choices=1,
         choices=DELIVERY_CHOICES,
-        default = DELIVERY_CHOICES[0][0]
+        default=DELIVERY_CHOICES[0][0]
     )
 
     def __str__(self):

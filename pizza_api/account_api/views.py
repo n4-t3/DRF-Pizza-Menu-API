@@ -2,7 +2,7 @@ from rest_framework import response, status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.decorators import api_view, permission_classes, authentication_classes
 from rest_framework.authentication import SessionAuthentication, BasicAuthentication
-from .serializers import UserSerializer,OrderSerializer
+from .serializers import UserSerializer,OrderSerializer,CartSerializer
 from . import models
 from api.models import Menu
 # Create your views here.
@@ -74,6 +74,53 @@ def order_chosen(request,id):
         elif request.method=="DELETE":
             order = models.Order.objects.get(id=id)
             order.delete()
+            return response.Response(status=status.HTTP_204_NO_CONTENT)
+    else:
+        return response.Response({'Error': 'Authentication credentials were not provided.'}, status=status.HTTP_403_FORBIDDEN)
+
+
+
+@api_view(['GET','POST'])
+def cart_api(request):
+    if request.user.is_authenticated:
+        if request.method == "GET":
+            cart = models.Cart.objects.filter(user=request.user)
+            serializer = CartSerializer(cart,many=True)
+            return response.Response(data=serializer.data, status=status.HTTP_200_OK)
+        elif request.method == "POST":
+            request.data["user"] = request.user.id
+            serializedCart = CartSerializer(data = request.data)
+            if serializedCart.is_valid():
+                serializedCart.save()
+                return response.Response(data=serializedCart.data, status=status.HTTP_200_OK)
+            else:
+                return response.Response(serializedCart.errors, status=status.HTTP_400_BAD_REQUEST)
+    else:
+        return response.Response({'Error': 'Authentication credentials were not provided.'}, status=status.HTTP_403_FORBIDDEN)
+
+
+@api_view(['GET','PUT','DELETE'])
+def cart_chosen(request,id):
+    if request.user.is_authenticated:
+        if request.method == "GET":
+            try:
+                cart = models.Cart.objects.get(id=id)
+                serializer = CartSerializer(cart)
+                return response.Response(data=serializer.data, status=status.HTTP_200_OK)
+            except:
+                return response.Response({'Error': 'cart not found'}, status=status.HTTP_404_NOT_FOUND)
+        elif request.method == "PUT":
+            cart = models.Cart.objects.get(id=id)
+            request.data["user"] = request.user.id
+            serializer = CartSerializer(cart, data=request.data)
+            if serializer.is_valid():
+                serializer.save()
+                return response.Response(data=serializer.data, status=status.HTTP_200_OK)
+            else:
+                return response.Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        elif request.method=="DELETE":
+            cart = models.Cart.objects.get(id=id)
+            cart.delete()
             return response.Response(status=status.HTTP_204_NO_CONTENT)
     else:
         return response.Response({'Error': 'Authentication credentials were not provided.'}, status=status.HTTP_403_FORBIDDEN)

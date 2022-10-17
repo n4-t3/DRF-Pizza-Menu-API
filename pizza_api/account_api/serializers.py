@@ -1,5 +1,5 @@
 from rest_framework import fields, serializers
-from .models import Order, SIDES_CHOICES, DELIVERY_CHOICES
+from .models import Order, Cart, SIDES_CHOICES, DELIVERY_CHOICES
 
 class UserSerializer(serializers.Serializer):
     id = serializers.IntegerField(read_only = True)
@@ -21,5 +21,9 @@ class OrderSerializer(serializers.ModelSerializer):
     extras = CustomMultipleChoiceField(choices=SIDES_CHOICES,required=False)
     delivery_status = CustomMultipleChoiceField(choices=DELIVERY_CHOICES,required=False)
 
+class CartSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Cart
+        fields= '__all__'
 
     
