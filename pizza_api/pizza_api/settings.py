@@ -26,7 +26,7 @@ MEDIA_DIR = os.path.join(BASE_DIR,'media')
 SECRET_KEY = config('SECRET_KEY')
 JWT_SECRET = config('JWT_SECRET')
 SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(seconds=20),
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=1),
     'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
     'ROTATE_REFRESH_TOKENS': True,
     'BLACKLIST_AFTER_ROTATION': True,

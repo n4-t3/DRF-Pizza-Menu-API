@@ -35,48 +35,50 @@ def user_api(request):
 
 @api_view(['GET','POST'])
 def orders_api(request):
-    if request.method == "GET":
-        orders = models.Order.objects.filter(user=request.user)
-        serializer = OrderSerializer(orders,many=True)
-        return response.Response(data=serializer.data, status=status.HTTP_200_OK)
-    elif request.method == "POST":
-        serializedOrder = OrderSerializer(data = request.data)
-        if serializedOrder.is_valid():
-            data = serializedOrder.validated_data
-            instance = models.Order()
-            instance.user = models.User.objects.filter(id=request.user.id).first()
-            instance.item = data["item"]
-            instance.extras = data['extras']
-            instance.delivery_status = data['delivery_status']
-            instance.save()
-            return response.Response(data=serializedOrder.data, status=status.HTTP_200_OK)
-        else:
-            return response.Response(serializedOrder.errors, status=status.HTTP_400_BAD_REQUEST)
+    if request.user.is_authenticated:
+        if request.method == "GET":
+            orders = models.Order.objects.filter(user=request.user)
+            serializer = OrderSerializer(orders,many=True)
+            return response.Response(data=serializer.data, status=status.HTTP_200_OK)
+        elif request.method == "POST":
+            serializedOrder = OrderSerializer(data = request.data)
+            if serializedOrder.is_valid():
+                data = serializedOrder.validated_data
+                instance = models.Order()
+                instance.user = models.User.objects.filter(id=request.user.id).first()
+                instance.item = data["item"]
+                instance.extras = data['extras']
+                instance.delivery_status = data['delivery_status']
+                instance.save()
+                return response.Response(data=serializedOrder.data, status=status.HTTP_200_OK)
+            else:
+                return response.Response(serializedOrder.errors, status=status.HTTP_400_BAD_REQUEST)
+    else:
+        return response.Response({'Error': 'Authentication credentials were not provided.'}, status=status.HTTP_403_FORBIDDEN)
 
 
 @api_view(['GET','PUT','DELETE'])
 def order_chosen(request,id):
-    if request.method == "GET":
-        try:
+    if request.user.is_authenticated:
+        if request.method == "GET":
+            try:
+                order = models.Order.objects.get(id=id)
+                serializer = OrderSerializer(order)
+                return response.Response(data=serializer.data, status=status.HTTP_200_OK)
+            except:
+                return response.Response({'Error': 'order not found'}, status=status.HTTP_404_NOT_FOUND)
+        elif request.method == "PUT":
             order = models.Order.objects.get(id=id)
-            serializer = OrderSerializer(order)
-            return response.Response(data=serializer.data, status=status.HTTP_200_OK)
-        except:
-            return response.Response({'Error': 'order not found'}, status=status.HTTP_404_NOT_FOUND)
-    elif request.method == "PUT" or request.method=="DELETE":   
-        if request.user.is_authenticated:
-            if request.method == "PUT":
-                order = models.Order.objects.get(id=id)
-                serializer = OrderSerializer(order, data=request.data)
-                if serializer.is_valid():
-                    serializer.save()
-                    return response.Response(data=serializer.data, status=status.HTTP_200_OK)
-                else:
-                    return response.Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-            elif request.method=="DELETE":
-                order = models.Order.objects.get(id=id)
-                order.delete()
-                return response.Response(status=status.HTTP_204_NO_CONTENT)
-        else:
-            return response.Response({'Error': 'Authentication credentials were not provided.'}, status=status.HTTP_403_FORBIDDEN)
+            serializer = OrderSerializer(order, data=request.data)
+            if serializer.is_valid():
+                serializer.save()
+                return response.Response(data=serializer.data, status=status.HTTP_200_OK)
+            else:
+                return response.Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        elif request.method=="DELETE":
+            order = models.Order.objects.get(id=id)
+            order.delete()
+            return response.Response(status=status.HTTP_204_NO_CONTENT)
+    else:
+        return response.Response({'Error': 'Authentication credentials were not provided.'}, status=status.HTTP_403_FORBIDDEN)
 
