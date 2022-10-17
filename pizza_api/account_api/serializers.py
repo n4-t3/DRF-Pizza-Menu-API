@@ -18,8 +18,8 @@ class OrderSerializer(serializers.ModelSerializer):
     class Meta:
         model = Order
         fields = '__all__'
-    extras = CustomMultipleChoiceField(choices=SIDES_CHOICES)
-    delivery_status = CustomMultipleChoiceField(choices=DELIVERY_CHOICES)
+    extras = CustomMultipleChoiceField(choices=SIDES_CHOICES,required=False)
+    delivery_status = CustomMultipleChoiceField(choices=DELIVERY_CHOICES,required=False)
 
 
     

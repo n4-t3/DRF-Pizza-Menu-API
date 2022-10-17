@@ -17,7 +17,7 @@ def menu_list(request,format=None):
         serializer = MenuSerializer(menu,many=True)
         return Response(data=serializer.data, status=status.HTTP_200_OK)
     elif request.method=='POST':
-        if request.user.is_authenticated:
+        if request.user.is_authenticated and request.user.is_staff:
             serializer = MenuSerializer(data=request.data)
             if serializer.is_valid():
                 data = serializer.validated_data
@@ -44,7 +44,7 @@ def menu_list(request,format=None):
             else:
                 return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         else:
-            return Response({'Error': 'Authentication credentials were not provided.'}, status=status.HTTP_403_FORBIDDEN)
+            return Response({'Error': 'Authentication credentials were not provided or user not staff.'}, status=status.HTTP_403_FORBIDDEN)
 
 # @renderer_classes([JSONRenderer])
 @api_view(['GET','PUT','DELETE'])
@@ -57,7 +57,7 @@ def menu_chosen(request,id):
         except:
             return Response({'Error': 'Menu not found'}, status=status.HTTP_404_NOT_FOUND)
     elif request.method == "PUT" or request.method=="DELETE":  
-        if request.user.is_authenticated:
+        if request.user.is_authenticated and request.user.is_staff:
             if request.method == "PUT":
                 menu = Menu.objects.get(id=id)
                 serializer = MenuSerializer(menu, data=request.data)
@@ -71,5 +71,5 @@ def menu_chosen(request,id):
                 movies.delete()
                 return Response(status=status.HTTP_204_NO_CONTENT)
         else:
-            return Response({'Error': 'Authentication credentials were not provided.'}, status=status.HTTP_403_FORBIDDEN)
+            return Response({'Error': 'Authentication credentials were not provided or user not staff.'}, status=status.HTTP_403_FORBIDDEN)
         

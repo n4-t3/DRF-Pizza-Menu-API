@@ -1,3 +1,4 @@
+from email.policy import default
 from django.db import models
 from django.contrib.auth import models as auth_models
 from api.models import Menu
@@ -78,7 +79,7 @@ class Order(models.Model):
         max_length=10,
         max_choices=1,
         choices=DELIVERY_CHOICES,
-        blank=True
+        default = DELIVERY_CHOICES[0][0]
     )
 
     def __str__(self):

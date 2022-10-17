@@ -41,15 +41,10 @@ def orders_api(request):
             serializer = OrderSerializer(orders,many=True)
             return response.Response(data=serializer.data, status=status.HTTP_200_OK)
         elif request.method == "POST":
+            request.data["user"] = request.user.id
             serializedOrder = OrderSerializer(data = request.data)
             if serializedOrder.is_valid():
-                data = serializedOrder.validated_data
-                instance = models.Order()
-                instance.user = models.User.objects.filter(id=request.user.id).first()
-                instance.item = data["item"]
-                instance.extras = data['extras']
-                instance.delivery_status = data['delivery_status']
-                instance.save()
+                serializedOrder.save()
                 return response.Response(data=serializedOrder.data, status=status.HTTP_200_OK)
             else:
                 return response.Response(serializedOrder.errors, status=status.HTTP_400_BAD_REQUEST)
@@ -69,6 +64,7 @@ def order_chosen(request,id):
                 return response.Response({'Error': 'order not found'}, status=status.HTTP_404_NOT_FOUND)
         elif request.method == "PUT":
             order = models.Order.objects.get(id=id)
+            request.data["user"] = request.user.id
             serializer = OrderSerializer(order, data=request.data)
             if serializer.is_valid():
                 serializer.save()
