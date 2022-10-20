@@ -5,11 +5,10 @@ from rest_framework.decorators import api_view,renderer_classes,parser_classes
 from rest_framework import status
 from rest_framework.renderers import JSONRenderer
 from rest_framework.parsers import FormParser,MultiPartParser
-from .utils import optimize_image
 # Create your views here.
 
 # @renderer_classes([JSONRenderer])
-# @parser_classes([MultiPartParser,FormParser])
+@parser_classes([MultiPartParser,FormParser])
 @api_view(['GET','POST'])
 def menu_list(request,format=None):
     if request.method =='GET':
@@ -24,21 +23,20 @@ def menu_list(request,format=None):
                 instance = Menu()
                 instance.name = data["name"]
                 instance.price = data["price"]
-                if "topping_1" in data:
-                    instance.topping_1 = data["topping_1"]
-                if "topping_2" in data:
-                    instance.topping_2 = data["topping_2"]
-                if "topping_3" in data:
-                    instance.topping_3 = data["topping_3"]
-                if "size" in data:
-                    instance.size = data["size"]
-                if "average_rating" in data:
-                    instance.average_rating = data["average_rating"]
-                if "number_of_ratings" in data:
-                    instance.number_of_ratings = data["number_of_ratings"]
+                if "topping_1" in request.POST:
+                    instance.topping_1 = request.POST["topping_1"]
+                if "topping_2" in request.POST:
+                    instance.topping_2 = request.POST["topping_2"]
+                if "topping_3" in request.POST:
+                    instance.topping_3 = request.POST["topping_3"]
+                if "size" in request.POST:
+                    instance.size = request.POST["size"]
+                if "our_rating" in request.POST:
+                    instance.our_rating = request.POST["our_rating"]
+                if "items_in_stock" in request.POST:
+                    instance.items_in_stock = request.POST["items_in_stock"]
                 if "picture" in request.FILES:
-                    image = optimize_image(request.FILES["picture"])
-                    instance.picture = image
+                    instance.picture = request.FILES["picture"]
                 instance.save()
                 return Response(data=serializer.data, status=status.HTTP_200_OK)
             else:

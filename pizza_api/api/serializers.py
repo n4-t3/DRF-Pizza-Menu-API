@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from .models import Menu
-from .utils import optimize_image
+
 class MenuSerializer(serializers.ModelSerializer):
     class Meta:
         model = Menu

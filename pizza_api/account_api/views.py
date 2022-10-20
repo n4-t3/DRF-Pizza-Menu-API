@@ -37,8 +37,14 @@ def user_api(request):
 def orders_api(request):
     if request.user.is_authenticated:
         if request.method == "GET":
-            orders = models.Order.objects.filter(user=request.user)
+            orders = models.Order.objects.filter(user=request.user).order_by('-id')
+            if request.user.is_staff:
+                orders = models.Order.objects.order_by('-id')
             serializer = OrderSerializer(orders,many=True)
+            for data in serializer.data:
+                user = models.User.objects.filter(id=data["user"])[0]
+                data["user_email"] = user.email
+                data["name"] = f"{user.first_name} {user.last_name}"
             return response.Response(data=serializer.data, status=status.HTTP_200_OK)
         elif request.method == "POST":
             request.data["user"] = request.user.id
@@ -64,7 +70,8 @@ def order_chosen(request,id):
                 return response.Response({'Error': 'order not found'}, status=status.HTTP_404_NOT_FOUND)
         elif request.method == "PUT":
             order = models.Order.objects.get(id=id)
-            request.data["user"] = request.user.id
+            if not request.data["user"]:
+                request.data["user"] = request.user.id
             serializer = OrderSerializer(order, data=request.data)
             if serializer.is_valid():
                 serializer.save()
