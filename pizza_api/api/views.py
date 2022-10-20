@@ -55,19 +55,23 @@ def menu_chosen(request,id):
         except:
             return Response({'Error': 'Menu not found'}, status=status.HTTP_404_NOT_FOUND)
     elif request.method == "PUT" or request.method=="DELETE":  
-        if request.user.is_authenticated and request.user.is_staff:
+        if request.user.is_authenticated:
             if request.method == "PUT":
                 menu = Menu.objects.get(id=id)
                 serializer = MenuSerializer(menu, data=request.data)
                 if serializer.is_valid():
+                    if "picture" not in request.FILES:
+                        serializer.validated_data["picture"] = menu.picture
                     serializer.save()
                     return Response(data=serializer.data, status=status.HTTP_200_OK)
                 else:
                     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
             elif request.method=="DELETE":
+                if not request.user.is_staff:
+                    return Response({'Error': 'User is not staff.'}, status=status.HTTP_403_FORBIDDEN)
                 movies = Menu.objects.get(id=id)
                 movies.delete()
                 return Response(status=status.HTTP_204_NO_CONTENT)
         else:
-            return Response({'Error': 'Authentication credentials were not provided or user not staff.'}, status=status.HTTP_403_FORBIDDEN)
+            return Response({'Error': 'Authentication credentials were not provided.'}, status=status.HTTP_403_FORBIDDEN)
         
