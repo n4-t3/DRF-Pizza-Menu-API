@@ -5,10 +5,17 @@ from rest_framework.authentication import SessionAuthentication, BasicAuthentica
 from .serializers import UserSerializer,OrderSerializer,CartSerializer
 from . import models
 from api.models import Menu
+from drf_yasg.utils import swagger_auto_schema
+from drf_yasg import openapi
 # Create your views here.
 
 
 @api_view(['POST'])
+@swagger_auto_schema(
+    operation_summary='Register User',
+    operation_description='This endpoint allows you to register a new user.',
+    request_body=UserSerializer
+)
 def register_api(request):
     serializer = UserSerializer(data=request.data)
     if serializer.is_valid():
@@ -23,8 +30,11 @@ def register_api(request):
     else:
         return response.Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-
 @api_view(['GET'])
+@swagger_auto_schema(
+    operation_summary='Check User',
+    operation_description='Check if user is authenticated',
+)
 def user_api(request):
     if request.user.is_authenticated:
         user = models.User.objects.filter(id=request.user.id).first()
@@ -34,6 +44,7 @@ def user_api(request):
         return response.Response({'Error': 'Authentication credentials were not provided.'}, status=status.HTTP_403_FORBIDDEN)
 
 @api_view(['GET','POST'])
+@swagger_auto_schema(request_body=OrderSerializer)
 def orders_api(request):
     if request.user.is_authenticated:
         if request.method == "GET":
@@ -59,6 +70,7 @@ def orders_api(request):
 
 
 @api_view(['GET','PUT','DELETE'])
+@swagger_auto_schema(request_body=OrderSerializer)
 def order_chosen(request,id):
     if request.user.is_authenticated:
         if request.method == "GET":
@@ -88,6 +100,7 @@ def order_chosen(request,id):
 
 
 @api_view(['GET','POST'])
+@swagger_auto_schema(request_body=CartSerializer)
 def cart_api(request):
     if request.user.is_authenticated:
         if request.method == "GET":
@@ -107,6 +120,7 @@ def cart_api(request):
 
 
 @api_view(['GET','PUT','DELETE'])
+@swagger_auto_schema(request_body=CartSerializer)
 def cart_chosen(request,id):
     if request.user.is_authenticated:
         if request.method == "GET":

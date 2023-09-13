@@ -77,6 +77,7 @@ INSTALLED_APPS = [
     'multiselectfield',
     'account_api',
     'api',
+    'drf_yasg',
 ]
 
 MIDDLEWARE = [

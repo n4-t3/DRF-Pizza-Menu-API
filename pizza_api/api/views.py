@@ -5,11 +5,17 @@ from rest_framework.decorators import api_view,renderer_classes,parser_classes
 from rest_framework import status
 from rest_framework.renderers import JSONRenderer
 from rest_framework.parsers import FormParser,MultiPartParser
+from drf_yasg.utils import swagger_auto_schema
 # Create your views here.
 
 # @renderer_classes([JSONRenderer])
 @parser_classes([MultiPartParser,FormParser])
 @api_view(['GET','POST'])
+@swagger_auto_schema(
+    operation_summary='Register User',
+    operation_description='This endpoint allows you to register a new user.',
+    request_body=MenuSerializer
+)
 def menu_list(request,format=None):
     if request.method =='GET':
         menu = Menu.objects.all()
@@ -46,6 +52,9 @@ def menu_list(request,format=None):
 
 # @renderer_classes([JSONRenderer])
 @api_view(['GET','PUT','DELETE'])
+@swagger_auto_schema(
+    request_body=MenuSerializer
+)
 def menu_chosen(request,id):
     if request.method == "GET":
         try:
