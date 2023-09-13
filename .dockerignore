@@ -1,0 +1,4 @@
+/env
+/pizza_api/*/__pycache__/
+/pizza_api/media/pizza-images/*
+/pizza_api/db.sqlite3

@@ -1,0 +1,17 @@
+version: "3"
+
+services:
+  pizza_api:
+    container_name: pizza_api
+    build: ./
+    command: >
+      sh -c "python manage.py makemigrations && python manage.py migrate &&
+            python manage.py runserver 0.0.0.0:8000"
+    working_dir: /usr/src/DRF-Pizza-Menu-API/pizza_api/
+    env_file: .env
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./:/usr/src/DRF-Pizza-Menu-API
+    links:
+      - postgres
