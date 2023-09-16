@@ -13,5 +13,3 @@ services:
       - "8000:8000"
     volumes:
       - ./:/usr/src/DRF-Pizza-Menu-API
-    links:
-      - postgres
