@@ -1,5 +1,7 @@
 # DRF-Pizza-Menu-API
 
+![Website](https://img.shields.io/website?up_message=Online&up_color=%2346cbae&down_message=Offline&down_color=lightgrey&url=https%3A%2F%2Fnathan34.pythonanywhere.com/docs/%2F&style=for-the-badge&logo=PythonAnywhere&logoColor=white&label=Status&cacheSeconds=3600)
+
 Pizza Menu API with:
 
 - Backend and authentication: **_Django Rest Framework_**
