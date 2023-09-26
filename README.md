@@ -8,15 +8,15 @@ To get more information about the API check the documentation at the `/docs` end
 
 ### Authentication
 
-JWT authentication used and refresh token will be sent at some intervals during logout the token will be added to blacklist to prevent usage.
+The API uses JWT (JSON Web Tokens) authentication. Refresh tokens are issued at regular intervals. When a user logs out, the token is added to a blacklist to prevent further usage.
 
 ### How to Use the Current API
 
 Make a fetch request to [nathan34.pythonanywhere.com](http://nathan34.pythonanywhere.com/).
 
-> This returns a json response that have the following structure.
+### Example Response
 
-```json wrap
+```json
 [
   {
     "id": 1,
@@ -48,7 +48,7 @@ For example: [nathan34.pythonanywhere.com/1/](http://nathan34.pythonanywhere.com
 
 > This returns a json response that have the following structure.
 
-```json wrap
+```json
 {
   "id": 1,
   "name": "Italian Pizza",
@@ -84,3 +84,7 @@ For example: [nathan34.pythonanywhere.com/1/](http://nathan34.pythonanywhere.com
 | 1      |     Small |
 | 2      |    Medium |
 | 3      |     Large |
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
