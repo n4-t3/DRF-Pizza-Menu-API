@@ -12,7 +12,7 @@ The API uses JWT (JSON Web Tokens) authentication. Refresh tokens are issued at 
 
 ### How to Use the Current API
 
-Make a fetch request to [nathan34.pythonanywhere.com](http://nathan34.pythonanywhere.com/).
+Make a fetch request to the end points.
 
 ### Example Response
 
