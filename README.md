@@ -44,7 +44,7 @@ Make a fetch request to the end points.
 ```
 
 You can choose a response using the menu ID.
-For example: [nathan34.pythonanywhere.com/1/](http://nathan34.pythonanywhere.com/1/).
+For example: yourendpoint/1/.
 
 > This returns a json response that have the following structure.
 
